@@ -8,13 +8,13 @@ player = pygame.image.load("player.png").convert_alpha()
 player = pygame.transform.scale(player, (50, 50))
 
 # Movement & Physics Variables
-player_x = 50
-player_y = 300
+player_x = 30
+player_y = 550
 player_dy = 0
 
 player_dy = 0
-gravity = 0.5
-jump_speed = -10
+gravity = 0.25
+jump_speed = -8
 on_ground = True
 
 
@@ -40,6 +40,12 @@ while running:
     if keys[pygame.K_RIGHT]:
         player_x += 5
 
+    #Side Borders
+    if player_x < 0:
+        player_x = 0
+    elif player_x > 750:
+        player_x = 750
+
     #Vertical Movement
     if keys[pygame.K_UP] and on_ground:
         player_dy = jump_speed
@@ -52,11 +58,14 @@ while running:
     # Apply vertical velocity to position
     player_y += player_dy
 
-    #Ground Check
-    if player_y >= 300:
-        player_y = 300
+    # Ground and Ceiling Borders 
+    if player_y >= 550:
+        player_y = 550
         player_dy = 0
         on_ground = True
+    elif player_y < 0:
+        player_y = 0
+        player_dy = 0
 
 
 pygame.quit()
